@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, watchEffect } from 'vue';
+import TheSettings from './components/TheSettings.vue';
 import TheElevator from './components/TheElevator.vue';
 import TheLevel from './components/TheLevel.vue';
 
@@ -11,6 +12,11 @@ const state = reactive({
   levelsTotal: 7,
   queue: [],
 });
+
+function changeSettings(levNum, elevNum) {
+  state.levelsTotal = levNum;
+  state.elevatorsTotal = elevNum;
+}
 
 function call(level) {
   if (
@@ -56,6 +62,11 @@ watchEffect(() => {
   <div
     class="flex flex-col w-full h-[85vh] px-3 md:pb-8 md:px-8 xl:px-20 xl:pb-20 xl:pt-5 md:h-screen"
   >
+    <TheSettings
+      :levelsTotal="state.levelsTotal"
+      :elevatorsTotal="state.elevatorsTotal"
+      @submit="changeSettings"
+    />
     <div class="flex flex-row h-full">
       <TheElevator
         v-for="item in state.elevatorsTotal"
