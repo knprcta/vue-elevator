@@ -1,13 +1,5 @@
 <script setup>
-import {
-  defineProps,
-  defineEmits,
-  defineExpose,
-  reactive,
-  computed,
-  watch,
-  toRefs,
-} from 'vue';
+import { reactive, computed, watch, toRefs } from 'vue';
 
 const props = defineProps({
   number: Number,

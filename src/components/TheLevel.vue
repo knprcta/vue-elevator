@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineExpose, reactive, toRefs } from 'vue';
+import { reactive, toRefs } from 'vue';
 
 const props = defineProps({
   number: Number,
