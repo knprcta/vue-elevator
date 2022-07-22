@@ -1,24 +1,15 @@
-# vue-elevator
+# «Эмулятор лифта»
 
-## Project setup
+Тестовое задание для вакансии «Frontend разработчик»
+
+### Установка
 ```
 npm install
 ```
+### Запуск
+```
+npm run start
+```
+**GitHub Pages**
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [Ссылка на проект в GitHub Pages](https://knprcta.github.io/vue-elevator/)
