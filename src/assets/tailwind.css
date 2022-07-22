@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  html {
+    @apply antialiased;
+  }
+  button {
+    @apply transition-all outline-none focus-visible:ring-4;
+    -webkit-tap-highlight-color: transparent;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
