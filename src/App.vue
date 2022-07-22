@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watchEffect } from 'vue';
+import { ref, reactive, watchEffect, watch, onBeforeMount } from 'vue';
 import TheSettings from './components/TheSettings.vue';
 import TheElevator from './components/TheElevator.vue';
 import TheLevel from './components/TheLevel.vue';
@@ -14,8 +14,13 @@ const state = reactive({
 });
 
 function changeSettings(levNum, elevNum) {
+  localStorage.clear();
   state.levelsTotal = levNum;
   state.elevatorsTotal = elevNum;
+  state.queue.length = 0;
+  setTimeout(() => {
+    window.location.reload();
+  }, 100);
 }
 
 function call(level) {
@@ -54,6 +59,19 @@ function run() {
 watchEffect(() => {
   if (state.queue.length && elevatorList.value.some((item) => item.isIdle)) {
     run();
+  }
+});
+
+watch(state, () => {
+  localStorage.setItem('app_state', JSON.stringify(state));
+});
+
+onBeforeMount(() => {
+  if (localStorage.app_state) {
+    const appState = JSON.parse(localStorage.getItem('app_state'));
+    state.elevatorsTotal = appState.elevatorsTotal;
+    state.levelsTotal = appState.levelsTotal;
+    state.queue = appState.queue;
   }
 });
 </script>

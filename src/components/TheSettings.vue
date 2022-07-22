@@ -88,6 +88,7 @@ watchEffect(() => {
                 <div class="flex">
                   <button
                     @click="state.levelsInput--"
+                    :disabled="state.levelsInput <= 2"
                     class="z-50 w-10 py-2 border rounded-l"
                   >
                     <span class="text-2xl font-bold leading-none">-</span>
@@ -98,9 +99,11 @@ watchEffect(() => {
                     type="number"
                     required
                     v-model.number="state.levelsInput"
+                    disabled
                   />
                   <button
                     @click="state.levelsInput++"
+                    :disabled="state.levelsInput >= 10"
                     class="w-10 py-2 border rounded-r"
                   >
                     <span class="text-2xl font-bold leading-none">+</span>
@@ -112,6 +115,7 @@ watchEffect(() => {
                 <div class="flex">
                   <button
                     @click="state.elevatorsInput--"
+                    :disabled="state.elevatorsInput <= 1"
                     class="z-50 w-10 py-2 border rounded-l"
                   >
                     <span class="text-2xl font-bold leading-none">-</span>
@@ -122,9 +126,11 @@ watchEffect(() => {
                     type="number"
                     required
                     v-model.number="state.elevatorsInput"
+                    disabled
                   />
                   <button
                     @click="state.elevatorsInput++"
+                    :disabled="state.elevatorsInput >= 10"
                     class="w-10 py-2 border rounded-r"
                   >
                     <span class="text-2xl font-bold leading-none">+</span>

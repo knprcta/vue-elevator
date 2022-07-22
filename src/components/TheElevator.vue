@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, computed, watch, toRefs } from 'vue';
+import { reactive, computed, watch, toRefs, onBeforeMount } from 'vue';
 
 const props = defineProps({
   number: Number,
@@ -77,6 +77,39 @@ const elevatorStyle = computed(() => {
     height: `${(1 / props.levelsTotal) * 100}%`,
     transform: `translateY(-${(state.currentLevel - 1) * 100}%)`,
   };
+});
+
+watch(state, () => {
+  localStorage.setItem(`elevator-${props.number}`, JSON.stringify(state));
+});
+
+onBeforeMount(() => {
+  if (localStorage[`elevator-${props.number}`]) {
+    const newState = JSON.parse(
+      localStorage.getItem(`elevator-${props.number}`)
+    );
+    state.currentLevel = newState.currentLevel;
+    state.timer = newState.timer;
+    state.isMoving = newState.isMoving;
+    state.isMovingUp = newState.isMovingUp;
+    state.isIdle = newState.isIdle;
+    state.isOpen = newState.isOpen;
+    state.nextLevel = newState.nextLevel;
+    if (state.nextLevel === 1 && state.isMoving) {
+      run();
+    }
+    if (state.isMoving) {
+      state.isLocal = true;
+    }
+    if (
+      (state.currentLevel === state.nextLevel && !state.isIdle) ||
+      state.isOpen
+    ) {
+      setTimeout(() => {
+        stop();
+      }, 100);
+    }
+  }
 });
 
 defineExpose({

@@ -15,4 +15,8 @@
     -webkit-appearance: none;
     margin: 0;
   }
+  input:disabled {
+    -webkit-text-fill-color: currentcolor;
+    opacity: 1;
+  }
 }

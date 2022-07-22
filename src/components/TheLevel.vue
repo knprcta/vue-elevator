@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, watch, onBeforeMount } from 'vue';
 
 const props = defineProps({
   number: Number,
@@ -7,6 +7,17 @@ const props = defineProps({
 
 const state = reactive({
   isRequested: false,
+});
+
+watch(state, () => {
+  localStorage.setItem(`level-${props.number}`, JSON.stringify(state));
+});
+
+onBeforeMount(() => {
+  if (localStorage[`level-${props.number}`]) {
+    const newState = JSON.parse(localStorage.getItem(`level-${props.number}`));
+    state.isRequested = newState.isRequested;
+  }
 });
 
 defineExpose({
@@ -23,11 +34,10 @@ defineExpose({
       <button
         @click="$emit('call', number)"
         :class="[
-          {
-            'text-blue-500 border-blue-500 ring-blue-500/50 animate-push scale-90 cursor-wait hover:bg-transparent':
-              state.isRequested,
-          },
-          'flex p-2.5 border-2 border-black rounded-full hover:bg-gray-400 ring-black/50',
+          state.isRequested
+            ? 'text-blue-500 border-blue-500 ring-blue-500/50 animate-push scale-90 cursor-wait'
+            : 'text-black border-black hover:bg-gray-400 ring-black/50',
+          'flex p-2.5 border-2 rounded-full',
         ]"
       >
         <span class="w-3 h-3 bg-current rounded-full"></span>
