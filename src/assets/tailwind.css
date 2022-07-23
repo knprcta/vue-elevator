@@ -9,6 +9,7 @@
   button {
     @apply transition-all outline-none focus-visible:ring-4;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
