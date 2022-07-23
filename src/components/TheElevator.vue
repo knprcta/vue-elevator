@@ -45,7 +45,6 @@ async function stop() {
   state.isOpen = false;
   state.isIdle = true;
   state.timer = 3;
-  state.isLocal = false;
 }
 
 function delay(ms) {
@@ -54,19 +53,24 @@ function delay(ms) {
 
 async function run() {
   start();
-  if (state.isLocal) {
-    await delay(1000);
-  }
   if (state.isMovingUp) {
-    while (state.currentLevel < state.nextLevel) {
-      state.currentLevel++;
-      await delay(1000);
+    for (
+      let i = state.currentLevel * 10, l = state.nextLevel * 10;
+      i < l;
+      await delay(100)
+    ) {
+      i++;
+      state.currentLevel = i / 10;
     }
   }
   if (!state.isMovingUp) {
-    while (state.currentLevel > state.nextLevel) {
-      state.currentLevel--;
-      await delay(1000);
+    for (
+      let i = state.currentLevel * 10, l = state.nextLevel * 10;
+      i > l;
+      await delay(100)
+    ) {
+      i--;
+      state.currentLevel = i / 10;
     }
   }
   stop();
@@ -95,9 +99,6 @@ onBeforeMount(() => {
     state.isIdle = newState.isIdle;
     state.isOpen = newState.isOpen;
     state.nextLevel = newState.nextLevel;
-    if (state.isMoving) {
-      state.isLocal = true;
-    }
     if (state.nextLevel === 1 && state.isMoving) {
       run();
     }
@@ -125,7 +126,7 @@ defineExpose({
       :class="[
         { 'animate-push': state.isOpen },
         { 'flex-col-reverse': !state.isMovingUp },
-        'absolute bottom-0 flex flex-col items-center justify-center w-full text-white transition-transform duration-1000 ease-linear bg-black border-2 border-white will-change-transform',
+        'absolute bottom-0 flex flex-col items-center justify-center w-full text-white ease-linear bg-black border-2 border-white transition-transform duration-100',
       ]"
     >
       <span
