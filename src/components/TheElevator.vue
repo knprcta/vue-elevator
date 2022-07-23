@@ -95,11 +95,11 @@ onBeforeMount(() => {
     state.isIdle = newState.isIdle;
     state.isOpen = newState.isOpen;
     state.nextLevel = newState.nextLevel;
-    if (state.nextLevel === 1 && state.isMoving) {
-      run();
-    }
     if (state.isMoving) {
       state.isLocal = true;
+    }
+    if (state.nextLevel === 1 && state.isMoving) {
+      run();
     }
     if (
       (state.currentLevel === state.nextLevel && !state.isIdle) ||
